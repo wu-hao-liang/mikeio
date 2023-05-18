@@ -337,16 +337,16 @@ class PfsDocument(PfsSection):
             value = self._parse_token(value)
         return value
 
-    _COMMA_MATCHER = re.compile(r",(?=(?:[^\"']*[\"'][^\"']*[\"'])*[^\"']*$)")
+    # _COMMA_MATCHER = re.compile(r",(?=(?:[^\"']*[\"'][^\"']*[\"'])*[^\"']*$)")
 
     def _split_line_by_comma(self, s: str):
-        return self._COMMA_MATCHER.split(s)
-        # import shlex
-        # lexer = shlex.shlex(s)
-        # lexer.whitespace += ","
-        # lexer.quotes += "|"
-        # lexer.wordchars += ",.-"
-        # return list(lexer)
+        # return self._COMMA_MATCHER.split(s)
+        import shlex
+        lexer = shlex.shlex(s)
+        lexer.whitespace += ","
+        lexer.quotes += "|"
+        lexer.wordchars += ",.-"
+        return list(lexer)
 
     def _parse_token(self, token: str, context="") -> str:
         s = token.strip()
