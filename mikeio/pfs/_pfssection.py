@@ -266,13 +266,16 @@ class PfsSection(SimpleNamespace, MutableMapping):
         else:
             return parampat == v
 
-    def find_replace(self, old_value, new_value):
+    def find_replace(self, old_value, new_value) -> int:
         """Update recursively all old_value with new_value"""
+        count = 0
         for k, v in self.items():
             if isinstance(v, PfsSection):
-                self[k].find_replace(old_value, new_value)
+                count = count + self[k].find_replace(old_value, new_value)
             elif self[k] == old_value:
                 self[k] = new_value
+                count = count + 1
+        return count
 
     def copy(self) -> "PfsSection":
         """Return a copy of the PfsSection."""
